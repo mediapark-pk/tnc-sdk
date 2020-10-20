@@ -43,4 +43,14 @@ class TncCoin
 
     }
 
+    public function getConfig()
+    {
+        $response =  $this->httpClient->sendRequest("getConfig",[],[],"POST");
+        if($response["status"]=="success")
+        {
+            return $response["result"];
+        }
+        throw new TncException("Server not working");
+    }
+
 }
