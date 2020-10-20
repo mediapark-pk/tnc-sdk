@@ -19,5 +19,12 @@ class TncCoin
     {
         $this->httpClient = new \TNC\HttpClient($ip, $port, $username, $password, $https);
     }
+    /**
+     * @return HttpClient
+     */
+    public function httpClient(): HttpClient
+    {
+        return $this->httpClient;
+    }
 
 }
