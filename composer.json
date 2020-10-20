@@ -12,11 +12,9 @@
   "require": {
     "comely-io/http": "^1.0.47"
   },
-  "autload": {
+  "autoload": {
     "psr-4": {
-      "TNC\\": [
-        "src"
-      ]
+      "TNC\\": ["src/"]
     }
   }
 }
