@@ -5,6 +5,7 @@ namespace TNC;
 
 use Comely\Http\Request;
 use SkyCoin\Exception\SkyCoinAPIException;
+use TNC\Exception\TnxAPIException;
 
 /**
  * Class HttpClient
@@ -40,20 +41,6 @@ class HttpClient
         $this->https = $https;
     }
 
-    /**
-     * @return string
-     * @throws SkyCoinAPIException
-     * @throws \Comely\Http\Exception\HttpException
-     */
-    public function getCSRFToken(): string
-    {
-        $csrfToken = $this->sendRequest("/v1/csrf")["csrf_token"] ?? null;
-        if (!is_string($csrfToken) || !$csrfToken) {
-            throw new SkyCoinAPIException('Could not retrieve CSRF token');
-        }
-
-        return $csrfToken;
-    }
 
     /**
      * @param string $endpoint
@@ -61,18 +48,16 @@ class HttpClient
      * @param array $headers
      * @param string $httpMethod
      * @return array
-     * @throws SkyCoinAPIException
-     * @throws \Comely\Http\Exception\HttpException
+     * @throws TnxAPIException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
      */
     public function sendRequest(string $endpoint, array $params = [], array $headers = [], string $httpMethod = "GET"): array
     {
         $url = $this->generateUri($endpoint);
         $req = new Request($httpMethod, $url);
 
-        // Set CSRF header if request is not GET
-        if (strtoupper($httpMethod) != "GET") {
-            $req->headers()->set("X-CSRF-Token", $this->getCSRFToken());
-        }
 
         // Set Request Headers
         $req->headers()->set("accept", "application/json");
@@ -103,7 +88,7 @@ class HttpClient
             $errMsg = $res->body()->value();
             if ($errMsg) {
                 $errMsg = trim(strval(explode("-", $errMsg)[1] ?? ""));
-                throw new SkyCoinAPIException($errMsg ? $errMsg : sprintf('HTTP Response Code %d', $errCode), $errCode);
+                throw new TnxAPIException($errMsg ? $errMsg : sprintf('HTTP Response Code %d', $errCode), $errCode);
             }
         }
 
