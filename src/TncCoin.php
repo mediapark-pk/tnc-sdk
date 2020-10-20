@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace TNC;
+use TNC\Exception\TncException;
 use TNC\HttpClient;
 
 /**
@@ -22,6 +23,24 @@ class TncCoin
     public function httpClient(): HttpClient
     {
         return $this->httpClient;
+    }
+
+    /**
+     * @return array
+     * @throws Exception\TnxAPIException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     */
+    public function dynamicGlobal(): array
+    {
+        $response =  $this->httpClient->sendRequest("getDynamicGlobal",[],[],"POST");
+        if($response["status"]=="success")
+        {
+            return $response["result"];
+        }
+        throw new TncException("Server not working");
+
     }
 
 }

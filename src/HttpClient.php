@@ -56,7 +56,6 @@ class HttpClient
     public function sendRequest(string $endpoint, array $params = [], array $headers = [], string $httpMethod = "GET"): array
     {
         $url = $this->generateUri($endpoint);
-
         $req = new Request($httpMethod, $url);
 
 
