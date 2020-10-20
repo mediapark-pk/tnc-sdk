@@ -56,6 +56,7 @@ class HttpClient
     public function sendRequest(string $endpoint, array $params = [], array $headers = [], string $httpMethod = "GET"): array
     {
         $url = $this->generateUri($endpoint);
+
         $req = new Request($httpMethod, $url);
 
 
@@ -83,6 +84,7 @@ class HttpClient
 
         // Send The Request
         $res = $request->send();
+
         $errCode = $res->code();
         if ($errCode !== 200) {
             $errMsg = $res->body()->value();

@@ -10,24 +10,39 @@ use Comely\Http\Exception\SSL_Exception;
 use TNC\Exception\TnxAPIException;
 use TNC\TncCoin;
 
+/**
+ * Class BlockFactory
+ * @package TNC\Blocks
+ */
 class BlockFactory
 {
+    /** @var TncCoin  */
     private TncCoin $tnc;
+
+    /**
+     * BlockFactory constructor.
+     * @param TncCoin $tnc
+     */
     public function __construct(TncCoin $tnc)
     {
         $this->tnc=$tnc;
     }
 
-    public function getBlockByNumber(int $blockNumber) :Block
+    /**
+     * @param int $blockNumber
+     * @return BlockFactory
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
+     * @throws TnxAPIException
+     */
+    public function getBlockByNumber(int $blockNumber)
     {
         $param = ["blockNum"=>$blockNumber];
-        try {
-            $data = $this->tnc->httpClient()->sendRequest("/api/getBlock",$param,[],"POST");
-            print_r($data);
-        } catch (HttpResponseException $e) {
-        } catch (SSL_Exception $e) {
-        } catch (HttpRequestException $e) {
-        } catch (TnxAPIException $e) {
+        $data = $this->tnc->httpClient()->sendRequest("getBlock",$param,[],"POST");
+        if($data["status"]=="success")
+        {
+            return new Block($data["result"]);
         }
     }
 }
