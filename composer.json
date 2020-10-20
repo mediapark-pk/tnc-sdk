@@ -1,0 +1,22 @@
+{
+  "name": "vendor_name/tnc-sdk",
+  "description": "TNC SDK",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "almoeeni",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "comely-io/http": "^1.0.47"
+  },
+  "autload": {
+    "psr-4": {
+      "TNC\\": [
+        "src"
+      ]
+    }
+  }
+}
