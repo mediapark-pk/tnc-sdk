@@ -36,7 +36,7 @@ class BlockFactory
      * @throws SSL_Exception
      * @throws TnxAPIException
      */
-    public function getBlockByNumber(int $blockNumber)
+    public function getBlockByNumber(int $blockNumber) :Block
     {
         $param = ["blockNum"=>$blockNumber];
         $data = $this->tnc->httpClient()->sendRequest("getBlock",$param,[],"POST");
