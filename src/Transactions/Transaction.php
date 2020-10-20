@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace TNC\Transactions;
+use TNC\Exception\TncException;
+
 /**
  * Class Transaction
  * @package TNC\Transactions
@@ -24,10 +26,16 @@ class Transaction
 
     /**
      * Transaction constructor.
+     * @param array $tx
+     * @throws TncException
      */
-    public function __construct()
+    public function __construct(array $tx)
     {
-
+//        $status = $tx["status"];
+//        if(!is_array($status) || !$status) {
+//            throw new TncException('No "status" object in response tx');
+//        }
     }
+
 
 }

@@ -17,19 +17,28 @@ class TxFactory
 
     /**
      * TxFactory constructor.
+     * @param TncCoin $tc
      */
     public function __construct(TncCoin $tc)
     {
         $this->tncCoin = $tc;
     }
 
+
     /**
      * @param string $txId
      * @return Transaction
+     * @throws TncException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws \TNC\Exception\TnxAPIException
      */
-    public function getById(string $txId) : Transaction
+    public function getById(string $txId)  //: Transaction
     {
-        $tx = $this->tncCoin->httpClient()->sendRequest();
-       return new Transaction($tx);
+        $param = ["txId"=>$txId];
+        $tx = $this->tncCoin->httpClient()->sendRequest("getTransaction", $param,[],"POST");
+        return new Transaction($tx);
     }
+
 }
