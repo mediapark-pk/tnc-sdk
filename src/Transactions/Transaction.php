@@ -29,17 +29,17 @@ class Transaction
      * @param array $tx
      * @throws TncException
      */
-    public function __construct(array $tx)
+    public function __construct(array $data)
     {
 
-        $this->refBlockNum = $tx['result']['ref_block_num'];
-        $this->refBlockPrefix = $tx['result']['ref_block_prefix'];
+        $this->refBlockNum = $data['result']['ref_block_num'];
+        $this->refBlockPrefix = $data['result']['ref_block_prefix'];
 
-        $this->creator = $tx['result']["operations"][0][1]["creator"];
-        $this->signature = $tx['result']["signatures"][0];
-        $this->transactionId = $tx['result']["transaction_id"];
-        $this ->blockNum = $tx['result']["block_num"];
-        $this->transactionNum = $tx['result']["transaction_num"];
+        $this->creator = $data['result']["operations"][0][1]["creator"];
+        $this->signature = $data['result']["signatures"][0];
+        $this->transactionId = $data['result']["transaction_id"];
+        $this ->blockNum = $data['result']["block_num"];
+        $this->transactionNum = $data['result']["transaction_num"];
 
 //        echo "<pre>";
 //        print_r($tx['result']["operations"][0][1]["creator"]);
