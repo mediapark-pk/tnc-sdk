@@ -29,12 +29,18 @@ class Transaction
      * @param array $tx
      * @throws TncException
      */
-    public function __construct(array $tx)
+    public function __construct(array $data)
     {
-//        $status = $tx["status"];
-//        if(!is_array($status) || !$status) {
-//            throw new TncException('No "status" object in response tx');
-//        }
+
+        $this->refBlockNum = $data['result']['ref_block_num'];
+        $this->refBlockPrefix = $data['result']['ref_block_prefix'];
+        if($data['result']["operations"]) {
+            $this->creator = $data['result']["operations"][0][1]["creator"];
+        }
+        $this->signature = $data['result']["signatures"][0];
+        $this->transactionId = $data['result']["transaction_id"];
+        $this ->blockNum = $data['result']["block_num"];
+        $this->transactionNum = $data['result']["transaction_num"];
     }
 
 
