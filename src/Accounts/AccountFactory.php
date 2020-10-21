@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace TNC\Accounts;
 
 
+use http\Exception\InvalidArgumentException;
 use TNC\Exception\TncException;
 use TNC\TncCoin;
 
@@ -48,6 +49,31 @@ class AccountFactory
                 $results[]=new Account($result);
             }
             return $results;
+        }
+
+        throw new TncException("Nothing Found!");
+    }
+
+    /**
+     * @param string $username
+     * @return string
+     * @throws TncException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws \TNC\Exception\TncAPIException
+     */
+    public function getAccountBalance(string $username):string
+    {
+        $username = [$username];
+        $params=array (
+            'usernames' => json_encode($username),
+        );
+        $response =$this->tnc->httpClient()->sendRequest("getAccounts",$params,[],"POST");
+        if(($response["status"]=="success") && ($response["result"]))
+        {
+
+            return $response["result"][0]["balance"];
         }
 
         throw new TncException("Nothing Found!");
