@@ -87,5 +87,27 @@ class TncCoin
         throw new TncException("Server not working");
     }
 
+    /**
+     * @param string $username
+     * @param string $password
+     * @return mixed
+     * @throws Exception\TnxAPIException
+     * @throws TncException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     */
+    public function login(string $username, string $password)
+    {
+        $param = ["username"=>$username,"password"=>$password];
+        $response =$this->httpClient->sendRequest("login",$param,[],"POST");
+        if($response["auth"])
+        {
+            return $response["result"];
+        }
+        throw new TncException("Login Failed");
+    }
+
+
 
 }
