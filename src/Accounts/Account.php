@@ -37,7 +37,7 @@ class Account
     /** @var string  */
     public string $balance;
     /** @var string  */
-    public string $savingBalance;
+    public ?string $savingBalance;
     /** @var int  */
     public int $postCount;
     /** @var string  */
@@ -49,10 +49,11 @@ class Account
     /** @var array  */
     public array $otherHistory;
     /** @var array  */
-    public array $bobServerVotes;
+    public ?array $bobServerVotes;
 
     public function __construct(array $data)
     {
+
         $this->id=$data["id"];
         $this->name=$data["name"];
         $this->owner=$data["owner"];
@@ -65,13 +66,13 @@ class Account
         $this->recoveryAccount=$data["recovery_account"];
         $this->lastAccountRecovery=$data["last_account_recovery"];
         $this->balance=$data["balance"];
-        $this->savingBalance=$data["saving_balance"];
+        $this->savingBalance=$data["savings_balance"];
         $this->postCount=$data["post_count"];
         $this->lastPost=$data["last_post"];
         $this->lastRootPost=$data["last_root_post"];
         $this->transferHistory=$data["transfer_history"];
         $this->otherHistory=$data["other_history"];
-        $this->bobServerVotes=$data["bob_server_votes"];
+        $this->bobServerVotes=$data["bobserver_votes"];
     }
 
 
