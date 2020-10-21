@@ -41,12 +41,6 @@ class Transaction
         $this->transactionId = $data['result']["transaction_id"];
         $this ->blockNum = $data['result']["block_num"];
         $this->transactionNum = $data['result']["transaction_num"];
-
-//        echo "<pre>";
-//        print_r($tx['result']["operations"][0][1]["creator"]);
-//        if(!is_array($status) || !$status) {
-//            throw new TncException('No "status" object in response tx');
-//        }
     }
 
 
