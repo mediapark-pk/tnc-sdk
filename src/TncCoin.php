@@ -108,6 +108,58 @@ class TncCoin
         throw new TncException("Login Failed");
     }
 
+    /**
+     * @param string $lowerBoundName
+     * @param int $limit
+     * @return mixed
+     * @throws Exception\TnxAPIException
+     * @throws TncException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     */
+    public function lookupAccounts(string $lowerBoundName, int $limit)
+    {
+        $param = ["lowerBoundName"=>$lowerBoundName,"limit"=>$limit];
+        $response = $this->httpClient->sendRequest("lookupAccounts",$param,[],"POST");
+        if($response["status"]=="success")
+        {
+            return $response["result"];
+        }
+        throw new TncException("Server not working");
+    }
+
+    /**
+     * @param string $account
+     * @param int $from
+     * @param int $limit
+     * @return mixed
+     * @throws Exception\TnxAPIException
+     * @throws TncException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     */
+    public function getAccountHistory(string $account, int $from, int $limit)
+    {
+        if($from<$limit)
+        {
+            throw new TncException("From Must Be Greater Than Limit");
+        }
+        $param = ["account"=>$account,"from"=>$from,"limit"=>$limit];
+        $response = $this->httpClient->sendRequest("getAccountHistory",$param,[],"POST");
+        if($response["status"]=="success")
+        {
+            return $response["result"];
+        }
+        else if($response["status"]=="fail")
+        {
+            throw new TncException($response["result"]["message"]);
+        }
+        throw new TncException("Server not working");
+    }
+
+
 
 
 }
