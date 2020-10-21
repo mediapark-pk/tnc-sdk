@@ -186,20 +186,20 @@ class TncCoin
 
     /**
      * @param string $privatekey
-     * @return array
+     * @return bool
      * @throws TncAPIException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
      */
-    public function isWif(string $privatekey) : array
+    public function isWif(string $privatekey) : bool
     {
         $params = ["wif" => $privatekey];
        // return $this->httpClient->sendRequest("isWif",$params,[],"POST");
         $response =  $this->httpClient->sendRequest("isWif",$params,[],"POST");
         if($response&&$response["result"])
         {
-            return $response;
+            return (bool)$response;
         }
         throw new TncAPIException("False");
     }
@@ -218,7 +218,7 @@ class TncCoin
         $response =  $this->httpClient->sendRequest("wifToPublic",$params,[],"POST");
         if($response&&$response["result"])
         {
-            return $response["result"];
+            return $response;
         }
         throw new TncAPIException("False");
     }
@@ -239,7 +239,7 @@ class TncCoin
         $response = $this->httpClient->sendRequest("wifIsValid",$params,[],"POST");
         if($response&&$response["result"])
         {
-            return $response["result"];
+            return $response;
         }
         throw new TncAPIException("False");
     }
