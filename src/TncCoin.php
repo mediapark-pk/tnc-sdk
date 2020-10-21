@@ -227,12 +227,13 @@ class TncCoin
     /**
      * @param string $privateKey
      * @param string $publicKey
+     * @return array
      * @throws TnxAPIException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
      */
-    public function wifIsValid(string $privateKey , string $publicKey)
+    public function wifIsValid(string $privateKey , string $publicKey) : array
     {
         $params = ["private_key" => $privateKey , "public_key" => $publicKey];
         $response = $this->httpClient->sendRequest("wifIsValid",$params,[],"POST");
@@ -241,7 +242,17 @@ class TncCoin
             return $response;
         }
         throw new TnxAPIException("Server not working");
+    }
 
+    public function getPrivateKeys(string $username , string $password, array $roles) : array
+    {
+        $params = ["username" => $username , "password" => $password , 'roles' => json_encode($roles)];
+        $response = $this->httpClient->sendRequest("getPrivateKeys",$params,[],"POST");
+        if(!empty($response))
+        {
+            return $response;
+        }
+        throw new TnxAPIException("Server not working");
     }
 
 }
