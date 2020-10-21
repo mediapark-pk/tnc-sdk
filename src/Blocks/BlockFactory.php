@@ -7,6 +7,7 @@ namespace TNC\Blocks;
 use Comely\Http\Exception\HttpRequestException;
 use Comely\Http\Exception\HttpResponseException;
 use Comely\Http\Exception\SSL_Exception;
+use TNC\Exception\TncException;
 use TNC\Exception\TnxAPIException;
 use TNC\TncCoin;
 
@@ -40,9 +41,11 @@ class BlockFactory
     {
         $param = ["blockNum"=>$blockNumber];
         $data = $this->tnc->httpClient()->sendRequest("getBlock",$param,[],"POST");
-        if($data["status"]=="success")
+
+        if(($data["status"]=="success")&&($data["result"]))
         {
             return new Block($data["result"]);
         }
+        throw new TncException($data["result"]??"Nothing Found");
     }
 }
