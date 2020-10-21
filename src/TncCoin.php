@@ -244,6 +244,16 @@ class TncCoin
         throw new TncAPIException("False");
     }
 
+    /**
+     * @param string $username
+     * @param string $password
+     * @param array $roles
+     * @return array
+     * @throws TnxAPIException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     */
     public function getPrivateKeys(string $username , string $password, array $roles) : array
     {
         $params = ["username" => $username , "password" => $password , 'roles' => json_encode($roles)];
