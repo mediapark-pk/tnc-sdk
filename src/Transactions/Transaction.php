@@ -31,7 +31,18 @@ class Transaction
      */
     public function __construct(array $tx)
     {
-//        $status = $tx["status"];
+
+        $this->refBlockNum = $tx['result']['ref_block_num'];
+        $this->refBlockPrefix = $tx['result']['ref_block_prefix'];
+
+        $this->creator = $tx['result']["operations"][0][1]["creator"];
+        $this->signature = $tx['result']["signatures"][0];
+        $this->transactionId = $tx['result']["transaction_id"];
+        $this ->blockNum = $tx['result']["block_num"];
+        $this->transactionNum = $tx['result']["transaction_num"];
+
+//        echo "<pre>";
+//        print_r($tx['result']["operations"][0][1]["creator"]);
 //        if(!is_array($status) || !$status) {
 //            throw new TncException('No "status" object in response tx');
 //        }
