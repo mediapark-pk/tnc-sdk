@@ -8,7 +8,7 @@ use Comely\Http\Exception\HttpRequestException;
 use Comely\Http\Exception\HttpResponseException;
 use Comely\Http\Exception\SSL_Exception;
 use TNC\Exception\TncException;
-use TNC\Exception\TnxAPIException;
+use TNC\Exception\TncAPIException;
 use TNC\TncCoin;
 
 /**
@@ -35,7 +35,7 @@ class BlockFactory
      * @throws HttpRequestException
      * @throws HttpResponseException
      * @throws SSL_Exception
-     * @throws TnxAPIException
+     * @throws TncAPIException
      */
     public function getBlockByNumber(int $blockNumber) :Block
     {

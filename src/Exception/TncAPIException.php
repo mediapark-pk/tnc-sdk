@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace TNC\Exception;
 /**
- * Class TnxAPIException
+ * Class TncAPIException
  * @package TNC\Exception
  */
-class TnxAPIException extends TncException
+class TncAPIException extends TncException
 {
 
 }

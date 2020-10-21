@@ -5,7 +5,7 @@ namespace TNC;
 
 use Comely\Http\Request;
 use SkyCoin\Exception\SkyCoinAPIException;
-use TNC\Exception\TnxAPIException;
+use TNC\Exception\TncAPIException;
 
 /**
  * Class HttpClient
@@ -48,7 +48,7 @@ class HttpClient
      * @param array $headers
      * @param string $httpMethod
      * @return array
-     * @throws TnxAPIException
+     * @throws TncAPIException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
@@ -89,7 +89,7 @@ class HttpClient
             $errMsg = $res->body()->value();
             if ($errMsg) {
                 $errMsg = trim(strval(explode("-", $errMsg)[1] ?? ""));
-                throw new TnxAPIException($errMsg ? $errMsg : sprintf('HTTP Response Code %d', $errCode), $errCode);
+                throw new TncAPIException($errMsg ? $errMsg : sprintf('HTTP Response Code %d', $errCode), $errCode);
             }
         }
 

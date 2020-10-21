@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace TNC;
 use TNC\Exception\TncException;
-use TNC\Exception\TnxAPIException;
+use TNC\Exception\TncAPIException;
 use TNC\HttpClient;
 
 /**
@@ -36,7 +36,7 @@ class TncCoin
 
     /**
      * @return array
-     * @throws Exception\TnxAPIException
+     * @throws Exception\TncAPIException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
@@ -54,7 +54,7 @@ class TncCoin
 
     /**
      * @return array
-     * @throws Exception\TnxAPIException
+     * @throws Exception\TncAPIException
      * @throws TncException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
@@ -72,7 +72,7 @@ class TncCoin
 
     /**
      * @return int
-     * @throws Exception\TnxAPIException
+     * @throws Exception\TncAPIException
      * @throws TncException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
@@ -92,7 +92,7 @@ class TncCoin
      * @param string $username
      * @param string $password
      * @return mixed
-     * @throws Exception\TnxAPIException
+     * @throws Exception\TncAPIException
      * @throws TncException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
@@ -113,7 +113,7 @@ class TncCoin
      * @param string $lowerBoundName
      * @param int $limit
      * @return mixed
-     * @throws Exception\TnxAPIException
+     * @throws Exception\TncAPIException
      * @throws TncException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
@@ -135,7 +135,7 @@ class TncCoin
      * @param int $from
      * @param int $limit
      * @return mixed
-     * @throws Exception\TnxAPIException
+     * @throws Exception\TncAPIException
      * @throws TncException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
@@ -168,7 +168,7 @@ class TncCoin
      * @param string $password
      * @param string $role
      * @return array
-     * @throws TnxAPIException
+     * @throws TncAPIException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
@@ -181,13 +181,13 @@ class TncCoin
         {
             return $response;
         }
-        throw new TnxAPIException("Server not working");
+        throw new TncAPIException("Server not working");
     }
 
     /**
      * @param string $privatekey
      * @return array
-     * @throws TnxAPIException
+     * @throws TncAPIException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
@@ -201,13 +201,13 @@ class TncCoin
         {
             return $response;
         }
-        throw new TnxAPIException("False");
+        throw new TncAPIException("False");
     }
 
     /**
      * @param string $privateKey
      * @return array
-     * @throws TnxAPIException
+     * @throws TncAPIException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
@@ -220,7 +220,7 @@ class TncCoin
         {
             return $response["result"];
         }
-        throw new TnxAPIException("False");
+        throw new TncAPIException("False");
     }
 
 
@@ -228,7 +228,7 @@ class TncCoin
      * @param string $privateKey
      * @param string $publicKey
      * @return array
-     * @throws TnxAPIException
+     * @throws TncAPIException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
@@ -241,7 +241,7 @@ class TncCoin
         {
             return $response["result"];
         }
-        throw new TnxAPIException("False");
+        throw new TncAPIException("False");
     }
 
     public function getPrivateKeys(string $username , string $password, array $roles) : array
@@ -252,7 +252,7 @@ class TncCoin
         {
             return $response["result"];
         }
-        throw new TnxAPIException("Server not working");
+        throw new TncAPIException("Server not working");
     }
 
 }

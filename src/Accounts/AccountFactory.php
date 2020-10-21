@@ -32,7 +32,7 @@ class AccountFactory
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
-     * @throws \TNC\Exception\TnxAPIException
+     * @throws \TNC\Exception\TncAPIException
      */
     public function getAccounts(array $usernames) :array
     {
