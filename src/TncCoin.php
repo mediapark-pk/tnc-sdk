@@ -3,8 +3,7 @@ declare(strict_types=1);
 namespace TNC;
 use TNC\Exception\TncException;
 use TNC\HttpClient;
-use TNC\Blocks\BlockFactory;
-use TNC\Transactions\TxFactory;
+
 /**
  * Class TncCoin
  * @package TNC
@@ -14,14 +13,6 @@ class TncCoin
     /** @var HttpClient */
     private HttpClient $httpClient;
 
-    /**
-     * TncCoin constructor.
-     * @param string $ip
-     * @param int|null $port
-     * @param string|null $username
-     * @param string|null $password
-     * @param bool $https
-     */
     public function __construct(string $ip, ?int $port = NULL, ?string $username = "", ?string $password = "", bool $https = false)
     {
         $this->httpClient = new \TNC\HttpClient($ip, $port, $username, $password, $https);
@@ -52,14 +43,6 @@ class TncCoin
 
     }
 
-    /**
-     * @return mixed
-     * @throws Exception\TnxAPIException
-     * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
-     */
     public function getConfig()
     {
         $response =  $this->httpClient->sendRequest("getConfig",[],[],"POST");
@@ -68,22 +51,6 @@ class TncCoin
             return $response["result"];
         }
         throw new TncException("Server not working");
-    }
-
-    /**
-     * @return BlockFactory
-     */
-    public function Block() : BlockFactory
-    {
-        return new BlockFactory();
-    }
-
-    /**
-     * @return TxFactory
-     */
-    public function Transaction() : TxFactory
-    {
-        return new TxFactory();
     }
 
 }
