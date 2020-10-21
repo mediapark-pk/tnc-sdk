@@ -177,7 +177,7 @@ class TncCoin
     {
         $params = ['username' => $username, "password" => $password, "role" => $role];
         $response =  $this->httpClient->sendRequest("toWif",$params,[],"POST");
-        if(!empty($response))
+        if($response&&$response["result"])
         {
             return $response;
         }
@@ -197,11 +197,11 @@ class TncCoin
         $params = ["wif" => $privatekey];
        // return $this->httpClient->sendRequest("isWif",$params,[],"POST");
         $response =  $this->httpClient->sendRequest("isWif",$params,[],"POST");
-        if(!empty($response))
+        if($response&&$response["result"])
         {
             return $response;
         }
-        throw new TnxAPIException("Server not working");
+        throw new TnxAPIException("False");
     }
 
     /**
@@ -216,11 +216,11 @@ class TncCoin
     {
         $params = ["private_key" => $privateKey];
         $response =  $this->httpClient->sendRequest("wifToPublic",$params,[],"POST");
-        if(!empty($response))
+        if($response&&$response["result"])
         {
-            return $response;
+            return $response["result"];
         }
-        throw new TnxAPIException("Server not working");
+        throw new TnxAPIException("False");
     }
 
 
@@ -237,11 +237,11 @@ class TncCoin
     {
         $params = ["private_key" => $privateKey , "public_key" => $publicKey];
         $response = $this->httpClient->sendRequest("wifIsValid",$params,[],"POST");
-        if(!empty($response))
+        if($response&&$response["result"])
         {
-            return $response;
+            return $response["result"];
         }
-        throw new TnxAPIException("Server not working");
+        throw new TnxAPIException("False");
     }
 
     /**
@@ -258,9 +258,9 @@ class TncCoin
     {
         $params = ["username" => $username , "password" => $password , 'roles' => json_encode($roles)];
         $response = $this->httpClient->sendRequest("getPrivateKeys",$params,[],"POST");
-        if(!empty($response))
+        if($response&&$response["result"])
         {
-            return $response;
+            return $response["result"];
         }
         throw new TnxAPIException("Server not working");
     }
