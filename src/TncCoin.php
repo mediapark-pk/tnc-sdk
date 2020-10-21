@@ -161,25 +161,23 @@ class TncCoin
     }
 
 
-
-
     /**
      * @param string $username
      * @param string $password
      * @param string $role
-     * @return array
+     * @return string
      * @throws TncAPIException
      * @throws \Comely\Http\Exception\HttpRequestException
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
      */
-    public function toWif(string $username, string $password, string $role) : array
+    public function toWif(string $username, string $password, string $role) : string
     {
         $params = ['username' => $username, "password" => $password, "role" => $role];
         $response =  $this->httpClient->sendRequest("toWif",$params,[],"POST");
         if($response&&$response["result"])
         {
-            return $response;
+            return $response["result"];
         }
         throw new TncAPIException("Server not working");
     }
@@ -199,7 +197,7 @@ class TncCoin
         $response =  $this->httpClient->sendRequest("isWif",$params,[],"POST");
         if($response&&$response["result"])
         {
-            return (bool)$response;
+            return $response["result"];
         }
         throw new TncAPIException("False");
     }
@@ -212,15 +210,15 @@ class TncCoin
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
      */
-    public function wifToPublic(string $privateKey) : array
+    public function wifToPublic(string $privateKey) : string
     {
         $params = ["private_key" => $privateKey];
         $response =  $this->httpClient->sendRequest("wifToPublic",$params,[],"POST");
         if($response&&$response["result"])
         {
-            return $response;
+            return $response["result"];
         }
-        throw new TncAPIException("False");
+        throw new TncAPIException("Incorrect Private Key");
     }
 
 
@@ -233,13 +231,13 @@ class TncCoin
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
      */
-    public function wifIsValid(string $privateKey , string $publicKey) : array
+    public function wifIsValid(string $privateKey , string $publicKey) : bool
     {
         $params = ["private_key" => $privateKey , "public_key" => $publicKey];
         $response = $this->httpClient->sendRequest("wifIsValid",$params,[],"POST");
         if($response&&$response["result"])
         {
-            return $response;
+            return $response["result"];
         }
         throw new TncAPIException("False");
     }
