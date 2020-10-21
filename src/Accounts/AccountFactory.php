@@ -25,6 +25,15 @@ class AccountFactory
         $this->tnc=$tnc;
     }
 
+    /**
+     * @param array $usernames
+     * @return array
+     * @throws TncException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws \TNC\Exception\TnxAPIException
+     */
     public function getAccounts(array $usernames) :array
     {
         $params=array (
