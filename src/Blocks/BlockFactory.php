@@ -55,7 +55,7 @@ class BlockFactory
      */
     public function getLatestBlockNumber():int
     {
-        $response =  $this->httpClient->sendRequest("getDynamicGlobal",[],[],"POST");
+        $response =  $this->tnc->httpClient()->sendRequest("getDynamicGlobal",[],[],"POST");
         if($response["status"]=="success")
         {
             return $response["result"]["head_block_number"];
