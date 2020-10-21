@@ -69,4 +69,23 @@ class TncCoin
         throw new TncException("Server not working");
     }
 
+    /**
+     * @return int
+     * @throws Exception\TnxAPIException
+     * @throws TncException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     */
+    public function getAccountCount():int
+    {
+        $response = $this->httpClient->sendRequest("getAccountCount",[],[],"POST");
+        if($response["status"]=="success")
+        {
+            return $response["result"];
+        }
+        throw new TncException("Server not working");
+    }
+
+
 }
