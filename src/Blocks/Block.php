@@ -44,9 +44,9 @@ class Block
         $transactions = $block["transactions"];
         if (is_array($transactions)) {
             foreach ($transactions as $tx) {
-                if (isset($tx["txid"]) && is_string($tx["txid"]) && preg_match('/^[a-f0-9]{64}$/i', $tx["txid"])) {
-                    $this->transactions[] = $tx["txid"];
-                }
+
+                    $this->transactions[] = $tx;
+
             }
         }
 
