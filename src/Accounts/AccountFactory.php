@@ -97,7 +97,7 @@ class AccountFactory
         $response=$this->tnc->httpClient()->sendRequest("createAccount",$param,[],"POST");
         if($response["status"]=="success" && $response["result"])
         {
-            $data =response["result"];
+            $data =$response["result"];
             return [
                 "id"=>$data["id"],
                 "blockNumber"=>$data["block_num"],
