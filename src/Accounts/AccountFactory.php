@@ -78,4 +78,37 @@ class AccountFactory
 
         throw new TncException("Nothing Found!");
     }
+
+    /**
+     * @param string $creator
+     * @param string $creatorWif
+     * @param string $username
+     * @param string $password
+     * @return Account
+     * @throws TncException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws \TNC\Exception\TncAPIException
+     */
+    public function createAccount(string $creator, string $creatorWif, string $username, string $password):array
+    {
+        $param =["creator"=>$creator,"creator_wif"=>$creatorWif,"username"=>$username,"password"=>$password];
+        $response=$this->tnc->httpClient()->sendRequest("createAccount",$param,[],"POST");
+        if($response["status"]=="success" && $response["result"])
+        {
+            $data =response["result"];
+            return [
+                "id"=>$data["id"],
+                "blockNumber"=>$data["block_num"],
+                "trxNum"=>$data["trx_num"],
+                "expired"=>$data["expired"]
+            ];
+        }
+        else if($response["status"]=="fail")
+        {
+            throw new TncException($response["result"]["message"]);
+        }
+
+    }
 }
