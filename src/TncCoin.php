@@ -263,4 +263,27 @@ class TncCoin
         throw new TncAPIException("Server not working");
     }
 
+    /**
+     * @param string $from
+     * @param string $from_password
+     * @param string $to
+     * @param string $amount
+     * @param string|null $memo
+     * @param string|null $memo_key
+     * @return mixed
+     * @throws TncAPIException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     */
+    public function transfer(string $from, string $from_password, string $to , string $amount, ?string $memo ="", ?string $memo_key="")
+    {
+        $params = ["from" => $from, "from_pwd" => $from_password, "to" => $to , "amount" => $amount , "memo" => $memo, "memo_Key" => $memo_key];
+        $response = $this->httpClient->sendRequest("transfer",$params,[],"POST");
+        if($response&&$response["result"])
+        {
+            return $response;
+        }
+        throw new TncAPIException("Server not found");
+    }
 }
