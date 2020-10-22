@@ -119,7 +119,7 @@ class TncCoin
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
      */
-    public function lookupAccounts(string $lowerBoundName, int $limit)
+    public function lookUpAccounts(string $lowerBoundName, int $limit)
     {
         $param = ["lowerBoundName"=>$lowerBoundName,"limit"=>$limit];
         $response = $this->httpClient->sendRequest("lookupAccounts",$param,[],"POST");
