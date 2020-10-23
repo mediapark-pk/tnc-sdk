@@ -44,7 +44,7 @@ class TncCoin
     public function dynamicGlobal(): array
     {
         $response =  $this->httpClient->sendRequest("getDynamicGlobal",[],[],"POST");
-        if($response["status"]=="success")
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
         }
@@ -63,7 +63,7 @@ class TncCoin
     public function getConfig():array
     {
         $response =  $this->httpClient->sendRequest("getConfig",[],[],"POST");
-        if($response["status"]=="success")
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
         }
@@ -81,7 +81,7 @@ class TncCoin
     public function getAccountCount():int
     {
         $response = $this->httpClient->sendRequest("getAccountCount",[],[],"POST");
-        if($response["status"]=="success")
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
         }
@@ -123,7 +123,7 @@ class TncCoin
     {
         $param = ["lowerBoundName"=>$lowerBoundName,"limit"=>$limit];
         $response = $this->httpClient->sendRequest("lookupAccounts",$param,[],"POST");
-        if($response["status"]=="success")
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
         }
@@ -149,7 +149,7 @@ class TncCoin
         }
         $param = ["account"=>$account,"from"=>$from,"limit"=>$limit];
         $response = $this->httpClient->sendRequest("getAccountHistory",$param,[],"POST");
-        if($response["status"]=="success")
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
         }
@@ -175,7 +175,7 @@ class TncCoin
     {
         $params = ['username' => $username, "password" => $password, "role" => $role];
         $response =  $this->httpClient->sendRequest("toWif",$params,[],"POST");
-        if($response&&$response["result"])
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
         }
@@ -195,7 +195,7 @@ class TncCoin
         $params = ["wif" => $privatekey];
        // return $this->httpClient->sendRequest("isWif",$params,[],"POST");
         $response =  $this->httpClient->sendRequest("isWif",$params,[],"POST");
-        if($response&&$response["result"])
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
         }
@@ -214,7 +214,7 @@ class TncCoin
     {
         $params = ["private_key" => $privateKey];
         $response =  $this->httpClient->sendRequest("wifToPublic",$params,[],"POST");
-        if($response&&$response["result"])
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
         }
@@ -235,7 +235,7 @@ class TncCoin
     {
         $params = ["private_key" => $privateKey , "public_key" => $publicKey];
         $response = $this->httpClient->sendRequest("wifIsValid",$params,[],"POST");
-        if($response&&$response["result"])
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
         }
@@ -256,7 +256,7 @@ class TncCoin
     {
         $params = ["username" => $username , "password" => $password , 'roles' => json_encode($roles)];
         $response = $this->httpClient->sendRequest("getPrivateKeys",$params,[],"POST");
-        if($response&&$response["result"])
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
         }
@@ -276,14 +276,19 @@ class TncCoin
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
      */
-    public function transfer(string $from, string $from_password, string $to , string $amount, ?string $memo ="", ?string $memo_key="")
+    public function transfer(string $from, string $from_password, string $to , string $amount, ?string $memo ="", ?string $memo_key=""):array
     {
         $params = ["from" => $from, "from_pwd" => $from_password, "to" => $to , "amount" => $amount , "memo" => $memo, "memo_Key" => $memo_key];
         $response = $this->httpClient->sendRequest("transfer",$params,[],"POST");
-        if($response&&$response["result"])
+
+        if($response["status"]=="success"&& $response["result"])
         {
-            return $response;
+            return $response["result"];
         }
-        throw new TncAPIException("Server not found");
+        else if($response["status"]=="fail")
+        {
+           throw new TncException($response["result"]["message"]);
+        }
+        throw new TncException("Server not found");
     }
 }
