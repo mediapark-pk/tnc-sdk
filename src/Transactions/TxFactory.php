@@ -38,6 +38,7 @@ class TxFactory
     {
         $param = ["transaction_id"=>$txId];
         $data = $this->tncCoin->httpClient()->sendRequest("getTransaction", $param,[],"POST");
+
         if(($data["status"]=="success")&&($data["result"]))
         {
             return new Transaction($data);
