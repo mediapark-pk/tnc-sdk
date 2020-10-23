@@ -63,7 +63,7 @@ class AccountFactory
      * @throws \Comely\Http\Exception\SSL_Exception
      * @throws \TNC\Exception\TncAPIException
      */
-    public function getAccountBalance(string $username):string
+    public function getAccountBalance(string $username):float
     {
         $username = [$username];
         $params=array (
@@ -73,7 +73,7 @@ class AccountFactory
         if(($response["status"]=="success") && ($response["result"]))
         {
 
-            return $response["result"][0]["balance"];
+            return (float)$response["result"][0]["balance"];
         }
 
         throw new TncException("Nothing Found!");
@@ -110,5 +110,36 @@ class AccountFactory
             throw new TncException($response["result"]["message"]);
         }
 
+    }
+
+    /**
+     * @param string $username
+     * @param string $oldPassword
+     * @param string $password
+     * @return array
+     * @throws TncException
+     * @throws \Comely\Http\Exception\HttpRequestException
+     * @throws \Comely\Http\Exception\HttpResponseException
+     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws \TNC\Exception\TncAPIException
+     */
+    public function updateAccountPassword(string $username, string $oldPassword, string $password):array
+    {
+        $param = ["username"=>$username,"old_password"=>$oldPassword,"password"=>$password];
+        $response = $this->tnc->httpClient()->sendRequest("updateAccount",$param,[],"POST");
+        if($response["status"]=="success" && $response["result"])
+        {
+            $data =$response["result"];
+            return [
+                "id"=>$data["id"],
+                "blockNumber"=>$data["block_num"],
+                "trxNum"=>$data["trx_num"],
+                "expired"=>$data["expired"]
+            ];
+        }
+        else if($response["status"]=="fail")
+        {
+            throw new TncException($response["result"]["message"]);
+        }
     }
 }
