@@ -34,7 +34,7 @@ class TxFactory
      * @throws \Comely\Http\Exception\SSL_Exception
      * @throws \TNC\Exception\TncAPIException
      */
-    public function getById(string $txId)  //: Transaction
+    public function getTransactionById(string $txId)  //: Transaction
     {
         $param = ["transaction_id"=>$txId];
         $data = $this->tncCoin->httpClient()->sendRequest("getTransaction", $param,[],"POST");
