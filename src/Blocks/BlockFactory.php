@@ -46,6 +46,10 @@ class BlockFactory
         {
             return new Block($data["result"]);
         }
+        else if($data["status"]=="fail")
+        {
+            throw new TncException($data["result"]["message"]);
+        }
         throw new TncException($data["result"]??"Nothing Found");
     }
 
@@ -56,9 +60,13 @@ class BlockFactory
     public function getLatestBlockNumber():int
     {
         $response =  $this->tnc->httpClient()->sendRequest("getDynamicGlobal",[],[],"POST");
-        if($response["status"]=="success")
+        if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"]["head_block_number"];
+        }
+        else if($response["status"]=="fail")
+        {
+            throw new TncException($response["result"]["message"]);
         }
         throw new TncException("Server not working");
     }

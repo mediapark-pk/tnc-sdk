@@ -109,6 +109,7 @@ class AccountFactory
         {
             throw new TncException($response["result"]["message"]);
         }
+        throw new TncException("Server not working");
 
     }
 
