@@ -32,10 +32,10 @@ class Transaction
     public function __construct(array $data)
     {
 
-        $this->refBlockNum = $data['result']['ref_block_num'];
-        $this->refBlockPrefix = $data['result']['ref_block_prefix'];
+        $this->refBlockNum = (int)$data['result']['ref_block_num'];
+        $this->refBlockPrefix = (int)$data['result']['ref_block_prefix'];
         if($data['result']["operations"]) {
-            $this->creator = $data['result']["operations"][0][1]["creator"];
+            $this->creator = (string)$data['result']["operations"][0][1]["creator"];
         }
         $this->signature = $data['result']["signatures"][0];
         $this->transactionId = $data['result']["transaction_id"];

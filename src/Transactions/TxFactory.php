@@ -37,8 +37,9 @@ class TxFactory
     public function getTransactionById(string $txId)  //: Transaction
     {
         $param = ["transaction_id"=>$txId];
-        $data = $this->tncCoin->httpClient()->sendRequest("getTransaction", $param,[],"POST");
 
+        $data = $this->tncCoin->httpClient()->sendRequest("getTransaction", $param,[],"POST");
+        print_r($data);
         if(($data["status"]=="success")&&($data["result"]))
         {
             return new Transaction($data);
