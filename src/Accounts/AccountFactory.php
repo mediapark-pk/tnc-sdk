@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace TNC\Accounts;
 
 
+use Comely\Http\Exception\HttpRequestException;
+use Comely\Http\Exception\HttpResponseException;
+use Comely\Http\Exception\SSL_Exception;
 use http\Exception\InvalidArgumentException;
 use TNC\Exception\TncAPIException;
 use TNC\Exception\TncException;
@@ -31,10 +34,10 @@ class AccountFactory
      * @param array $usernames
      * @return array
      * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
-     * @throws \TNC\Exception\TncAPIException
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
+     * @throws TncAPIException
      */
     public function getAccounts(array $usernames): array
     {
@@ -55,15 +58,19 @@ class AccountFactory
 
     /**
      * @param string $username
-     * @return string
+     * @return float
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
+     * @throws TncAPIException
      * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
-     * @throws \TNC\Exception\TncAPIException
      */
     public function getAccountBalance(string $username): float
     {
+        if(!$username)
+        {
+            throw new TncException("Username must not be empty");
+        }
         $username = [$username];
         $params = array(
             'usernames' => json_encode($username),
@@ -84,10 +91,10 @@ class AccountFactory
      * @param string $password
      * @return Account
      * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
-     * @throws \TNC\Exception\TncAPIException
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
+     * @throws TncAPIException
      */
     public function createAccount(string $creator, string $creatorWif, string $username, string $password): array
     {
@@ -122,10 +129,10 @@ class AccountFactory
      * @param string $password
      * @return array
      * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
-     * @throws \TNC\Exception\TncAPIException
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
+     * @throws TncAPIException
      */
     public function updateAccountPassword(string $username, string $oldPassword, string $password): array
     {
