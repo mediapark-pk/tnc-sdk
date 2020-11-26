@@ -43,7 +43,7 @@ class TncCoin
      */
     public function dynamicGlobal(): array
     {
-        $response =  $this->httpClient->sendRequest("getDynamicGlobal",[],[],"POST");
+        $response =  $this->httpClient->sendRequest("getDynamicGlobal");
         if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];

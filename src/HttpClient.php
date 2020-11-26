@@ -53,7 +53,7 @@ class HttpClient
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
      */
-    public function sendRequest(string $endpoint, array $params = [], array $headers = [], string $httpMethod = "GET"): array
+    public function sendRequest(string $endpoint, array $params = [], array $headers = [], string $httpMethod = "POST"): array
     {
         $url = $this->generateUri($endpoint);
         $req = new Request($httpMethod, $url);
