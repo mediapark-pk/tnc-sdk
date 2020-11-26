@@ -22,7 +22,8 @@ class TncCoin
      * @param string|null $password
      * @param bool $https
      */
-    public function __construct(string $ip, ?int $port = NULL, ?string $username = "", ?string $password = "", bool $https = false)
+    public function __construct(string $ip, ?int $port = NULL, ?string $username = "", ?string $password = "",
+                                bool $https = false)
     {
         $this->httpClient = new \TNC\HttpClient($ip, $port, $username, $password, $https);
     }
@@ -276,7 +277,8 @@ class TncCoin
      * @throws \Comely\Http\Exception\HttpResponseException
      * @throws \Comely\Http\Exception\SSL_Exception
      */
-    public function transfer(string $from, string $from_password, string $to , string $amount, ?string $memo ="", ?string $memo_key=""):array
+    public function transfer(string $from, string $from_password, string $to , string $amount, ?string $memo ="",
+                             ?string $memo_key=""):array
     {
         $params = [
             "from" => $from,
