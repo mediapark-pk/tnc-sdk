@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 namespace TNC;
+use Comely\Http\Exception\HttpRequestException;
+use Comely\Http\Exception\HttpResponseException;
+use Comely\Http\Exception\SSL_Exception;
 use TNC\Exception\TncException;
 use TNC\Exception\TncAPIException;
 use TNC\HttpClient;
@@ -38,9 +41,9 @@ class TncCoin
     /**
      * @return array
      * @throws Exception\TncAPIException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function dynamicGlobal(): array
     {
@@ -57,9 +60,9 @@ class TncCoin
      * @return array
      * @throws Exception\TncAPIException
      * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function getConfig():array
     {
@@ -75,9 +78,9 @@ class TncCoin
      * @return int
      * @throws Exception\TncAPIException
      * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function getAccountCount():int
     {
@@ -92,12 +95,12 @@ class TncCoin
     /**
      * @param string $username
      * @param string $password
-     * @return mixed
-     * @throws Exception\TncAPIException
+     * @return string
+     * @throws TncAPIException
      * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function login(string $username, string $password)
     {
@@ -105,7 +108,7 @@ class TncCoin
         $response =$this->httpClient->sendRequest("login",$param);
         if($response["auth"])
         {
-            return $response["result"];
+            return "Logged In!";
         }
         throw new TncException("Login Failed");
     }
@@ -116,9 +119,9 @@ class TncCoin
      * @return mixed
      * @throws Exception\TncAPIException
      * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function lookUpAccounts(string $lowerBoundName, int $limit)
     {
@@ -138,9 +141,9 @@ class TncCoin
      * @return mixed
      * @throws Exception\TncAPIException
      * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function getAccountHistory(string $account, int $from, int $limit)
     {
@@ -168,9 +171,9 @@ class TncCoin
      * @param string $role
      * @return string
      * @throws TncAPIException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function toWif(string $username, string $password, string $role) : string
     {
@@ -187,9 +190,9 @@ class TncCoin
      * @param string $privatekey
      * @return bool
      * @throws TncAPIException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function isWif(string $privatekey) : bool
     {
@@ -207,9 +210,9 @@ class TncCoin
      * @param string $privateKey
      * @return array
      * @throws TncAPIException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function wifToPublic(string $privateKey) : string
     {
@@ -228,9 +231,9 @@ class TncCoin
      * @param string $publicKey
      * @return array
      * @throws TncAPIException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function wifIsValid(string $privateKey , string $publicKey) : bool
     {
@@ -249,9 +252,9 @@ class TncCoin
      * @param array $roles
      * @return array
      * @throws TnxAPIException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function getPrivateKeys(string $username , string $password, array $roles) : array
     {
@@ -273,9 +276,9 @@ class TncCoin
      * @param string|null $memo_key
      * @return mixed
      * @throws TncAPIException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function transfer(string $from, string $from_password, string $to , string $amount, ?string $memo ="",
                              ?string $memo_key=""):array
