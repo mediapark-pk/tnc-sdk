@@ -91,6 +91,14 @@ class AccountFactory
      */
     public function createAccount(string $creator, string $creatorWif, string $username, string $password): array
     {
+        if(!($username) )
+        {
+            throw new TncException("Username must not be empty");
+        }
+        if( !($password))
+        {
+            throw new TncException("Password must not be empty");
+        }
         $param = ["creator" => $creator, "creator_wif" => $creatorWif, "username" => $username, "password" => $password];
         $response = $this->tnc->httpClient()->sendRequest("createAccount", $param, [], "POST");
         if ($response["status"] == "success" && $response["result"]) {

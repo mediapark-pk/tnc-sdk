@@ -179,11 +179,11 @@ class TncCoin
      * @throws HttpResponseException
      * @throws SSL_Exception
      */
-    public function toWif(string $username, string $password, string $role) : string
+    public function toWif(string $username, string $password, string $role="owner") : string
     {
         $params = ['username' => $username, "password" => $password, "role" => $role];
         $response =  $this->httpClient->sendRequest("toWif",$params);
-        if($response["status"]=="success"&&$response["result"])
+        if($response["result"])
         {
             return $response["result"];
         }
@@ -264,7 +264,7 @@ class TncCoin
     {
         $params = ["username" => $username , "password" => $password , 'roles' => json_encode($roles)];
         $response = $this->httpClient->sendRequest("getPrivateKeys",$params);
-        if($response["status"]=="success"&&$response["result"])
+        if($response["result"])
         {
             return $response["result"];
         }
