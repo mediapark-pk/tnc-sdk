@@ -278,7 +278,14 @@ class TncCoin
      */
     public function transfer(string $from, string $from_password, string $to , string $amount, ?string $memo ="", ?string $memo_key=""):array
     {
-        $params = ["from" => $from, "from_pwd" => $from_password, "to" => $to , "amount" => $amount , "memo" => $memo, "memo_Key" => $memo_key];
+        $params = [
+            "from" => $from,
+            "from_pwd" => $from_password,
+            "to" => $to ,
+            "amount" => $amount ,
+            "memo" => $memo,
+            "memo_Key" => $memo_key
+        ];
         $response = $this->httpClient->sendRequest("transfer",$params);
 
         if($response["status"]=="success"&& $response["result"])
