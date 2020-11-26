@@ -36,6 +36,10 @@ class TxFactory
      */
     public function getTransactionById(string $txId)  //: Transaction
     {
+        if(!$txId)
+        {
+            throw new TncException("TxId cannot be null");
+        }
         $param = ["transaction_id"=>$txId];
 
         $data = $this->tncCoin->httpClient()->sendRequest("getTransaction", $param,[],"POST");
