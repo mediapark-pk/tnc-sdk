@@ -145,8 +145,12 @@ class TncCoin
      * @throws HttpResponseException
      * @throws SSL_Exception
      */
-    public function getAccountHistory(string $account, int $from, int $limit)
+    public function getAccountHistory(string $account, int $from, int $limit=0)
     {
+        if($from<0||$limit<0)
+        {
+            throw new TncException("From & Limit Must Be Greater Than 0");
+        }
         if($from<$limit)
         {
             throw new TncException("From Must Be Greater Than Limit");
