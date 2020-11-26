@@ -62,7 +62,7 @@ class TncCoin
      */
     public function getConfig():array
     {
-        $response =  $this->httpClient->sendRequest("getConfig",[],[],"POST");
+        $response =  $this->httpClient->sendRequest("getConfig");
         if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"];
