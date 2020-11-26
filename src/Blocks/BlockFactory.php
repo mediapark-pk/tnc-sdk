@@ -39,6 +39,10 @@ class BlockFactory
      */
     public function getBlockByNumber(int $blockNumber) :Block
     {
+        if(!$blockNumber)
+        {
+            throw new TncException("Blocknumber must not be empty");
+        }
         $param = ["blockNum"=>$blockNumber];
         $data = $this->tnc->httpClient()->sendRequest("getBlock",$param,[],"POST");
 
