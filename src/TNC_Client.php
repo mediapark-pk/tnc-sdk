@@ -72,6 +72,9 @@ class TNC_Client
     {
         $response = $this->httpClient->request($endpoint, $params);
         $status = isset($response["status"]) && $response["status"] === "success";
+        if (isset($response["result"])) {
+            return $response["result"];
+        }
         if ($status && isset($response["result"])) {
             return $response["result"];
         }

@@ -33,10 +33,11 @@ class AccountFactory
     public function getAccounts(array $usernames): array
     {
         $params = [
-            "username" => json_encode($usernames),
+            "usernames" => json_encode($usernames)
         ];
 
         $result = $this->tnc->callAPI("getAccounts", $params);
+
         if (!is_array($result)) {
             throw TNC_APIResponseException::unexpectedResultType("getAccounts", "array", gettype($result));
         }
