@@ -273,23 +273,36 @@ class TncCoin
 
     /**
      * @param string $from
-     * @param string $from_password
+     * @param string $fromPassword
      * @param string $to
      * @param string $amount
      * @param string|null $memo
      * @param string|null $memo_key
-     * @return mixed
-     * @throws TncAPIException
+     * @return array
      * @throws HttpRequestException
      * @throws HttpResponseException
      * @throws SSL_Exception
+     * @throws TncAPIException
+     * @throws TncException
      */
-    public function transfer(string $from, string $from_password, string $to , string $amount, ?string $memo ="",
+    public function transfer(string $from, string $fromPassword, string $to , string $amount, ?string $memo ="",
                              ?string $memo_key=""):array
     {
+        if(!$from)
+        {
+            throw  new TncException("From cannot be null");
+        }
+        if(!$fromPassword)
+        {
+            throw  new TncException("From Password cannot be null");
+        }
+        if(!$to)
+        {
+            throw  new TncException("To cannot be null");
+        }
         $params = [
             "from" => $from,
-            "from_pwd" => $from_password,
+            "from_pwd" => $fromPassword,
             "to" => $to ,
             "amount" => $amount ,
             "memo" => $memo,
