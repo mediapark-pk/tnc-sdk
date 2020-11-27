@@ -1,30 +1,29 @@
 <?php
 declare(strict_types=1);
-namespace TNC\Blocks;
 
-use TNC\Exception\TncException;
+namespace MediaParkPK\TNC\Blocks;
 
 /**
  * Class Block
- * @package TNC\Blocks
+ * @package MediaParkPK\TNC\Blocks
  */
 class Block
 {
-    /** @var string  */
+    /** @var string */
     public string $previous;
-    /** @var string  */
+    /** @var string */
     public string $timestamp;
-    /** @var string  */
+    /** @var string */
     public string $bobserver;
-    /** @var string  */
+    /** @var string */
     public string $bobserverSignature;
-    /** @var string  */
+    /** @var string */
     public string $blockId;
-    /** @var string  */
+    /** @var string */
     public string $signingKey;
-    /** @var string  */
+    /** @var string */
     public string $transactionMerkleRoot;
-    /** @var array  */
+    /** @var array */
     public array $transactions;
 
     /**
@@ -33,23 +32,19 @@ class Block
      */
     public function __construct(array $block)
     {
-        $this->previous=$block["previous"];
-        $this->timestamp=$block["timestamp"];
-        $this->bobserver=$block["bobserver"];
-        $this->bobserverSignature=$block["bobserver_signature"];
-        $this->transactionMerkleRoot=$block["transaction_merkle_root"];
-        $this->blockId=$block["block_id"];
-        $this->signingKey=$block["signing_key"];
-        $this->transactions=[];
+        $this->previous = $block["previous"];
+        $this->timestamp = $block["timestamp"];
+        $this->bobserver = $block["bobserver"];
+        $this->bobserverSignature = $block["bobserver_signature"];
+        $this->transactionMerkleRoot = $block["transaction_merkle_root"];
+        $this->blockId = $block["block_id"];
+        $this->signingKey = $block["signing_key"];
+        $this->transactions = [];
         $transactions = $block["transactions"];
         if (is_array($transactions)) {
             foreach ($transactions as $tx) {
-
-                    $this->transactions[] = $tx;
-
+                $this->transactions[] = $tx;
             }
         }
-
-
     }
 }

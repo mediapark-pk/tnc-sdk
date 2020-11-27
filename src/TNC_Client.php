@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace MediaParkPK\TNC;
 
+use MediaParkPK\TNC\Accounts\AccountFactory;
+use MediaParkPK\TNC\Blocks\BlockFactory;
 use MediaParkPK\TNC\Exception\TNC_APIException;
 use MediaParkPK\TNC\Exception\TNC_APIResponseException;
 use MediaParkPK\TNC\Transactions\TxFactory;
@@ -17,6 +19,10 @@ class TNC_Client
     private HttpClient $httpClient;
     /** @var TxFactory */
     private TxFactory $txF;
+    /** @var AccountFactory */
+    private AccountFactory $aF;
+    /** @var BlockFactory */
+    private BlockFactory $bF;
 
     /**
      * TNC_Client constructor.
@@ -27,14 +33,8 @@ class TNC_Client
     {
         $this->httpClient = new HttpClient($ip, $port);
         $this->txF = new TxFactory($this);
-    }
-
-    /**
-     * @return HttpClient
-     */
-    private function httpClient(): HttpClient
-    {
-        return $this->httpClient;
+        $this->aF = new AccountFactory($this);
+        $this->bF = new BlockFactory($this);
     }
 
     /**
@@ -43,6 +43,22 @@ class TNC_Client
     public function txFactory(): TxFactory
     {
         return $this->txF;
+    }
+
+    /**
+     * @return AccountFactory
+     */
+    public function accounts(): AccountFactory
+    {
+        return $this->aF;
+    }
+
+    /**
+     * @return BlockFactory
+     */
+    public function blocks(): BlockFactory
+    {
+        return $this->bF;
     }
 
     /**
