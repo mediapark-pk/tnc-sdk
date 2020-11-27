@@ -71,13 +71,15 @@ class TNC_Client
     public function callAPI(string $endpoint, array $params = [])
     {
         $response = $this->httpClient->request($endpoint, $params);
-        $status = isset($response["status"]) && $response["status"] === "success";
-        if (isset($response["result"])) {
+     //   $status = isset($response["status"]) && $response["status"] === "success";
+
+        if (isset($response["result"]) ) {
             return $response["result"];
         }
-        if ($status && isset($response["result"])) {
-            return $response["result"];
-        }
+//        if ($status && isset($response["result"])) {
+//            return $response["result"];
+//        }
+
 
         $failMsg = $response["result"]["message"] ?? null;
         if (!$failMsg) {
