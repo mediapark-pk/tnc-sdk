@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace TNC;
 
+use Comely\Http\Exception\HttpRequestException;
+use Comely\Http\Exception\HttpResponseException;
+use Comely\Http\Exception\SSL_Exception;
 use Comely\Http\Request;
 use SkyCoin\Exception\SkyCoinAPIException;
 use TNC\Exception\TncAPIException;
@@ -49,9 +52,9 @@ class HttpClient
      * @param string $httpMethod
      * @return array
      * @throws TncAPIException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
      */
     public function sendRequest(string $endpoint, array $params = [], array $headers = [], string $httpMethod = "POST"): array
     {

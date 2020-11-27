@@ -40,10 +40,11 @@ class TncCoin
 
     /**
      * @return array
-     * @throws Exception\TncAPIException
      * @throws HttpRequestException
      * @throws HttpResponseException
      * @throws SSL_Exception
+     * @throws TncAPIException
+     * @throws TncException
      */
     public function dynamicGlobal(): array
     {
@@ -255,10 +256,10 @@ class TncCoin
      * @param string $password
      * @param array $roles
      * @return array
-     * @throws TnxAPIException
      * @throws HttpRequestException
      * @throws HttpResponseException
      * @throws SSL_Exception
+     * @throws TncAPIException
      */
     public function getPrivateKeys(string $username , string $password, array $roles) : array
     {

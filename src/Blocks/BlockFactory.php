@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace TNC\Blocks;
 
 
@@ -31,11 +32,12 @@ class BlockFactory
 
     /**
      * @param int $blockNumber
-     * @return BlockFactory
+     * @return Block
      * @throws HttpRequestException
      * @throws HttpResponseException
      * @throws SSL_Exception
      * @throws TncAPIException
+     * @throws TncException
      */
     public function getBlockByNumber(int $blockNumber) :Block
     {
@@ -63,7 +65,13 @@ class BlockFactory
      */
     public function getLatestBlockNumber():int
     {
-        $response =  $this->tnc->httpClient()->sendRequest("getDynamicGlobal",[],[],"POST");
+        try {
+            $response = $this->tnc->httpClient()->sendRequest("getDynamicGlobal", [], [], "POST");
+        } catch (HttpResponseException $e) {
+        } catch (SSL_Exception $e) {
+        } catch (HttpRequestException $e) {
+        } catch (TncAPIException $e) {
+        }
         if($response["status"]=="success"&&$response["result"])
         {
             return $response["result"]["head_block_number"];

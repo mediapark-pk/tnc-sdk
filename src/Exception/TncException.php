@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 namespace TNC\Exception;
+use Exception;
+
 /**
  * Class TncException
  * @package TNC\Exception
  */
-class TncException extends \Exception
+class TncException extends Exception
 {
     /**
      * @param string $method

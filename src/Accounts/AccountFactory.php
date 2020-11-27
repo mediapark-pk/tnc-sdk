@@ -67,8 +67,7 @@ class AccountFactory
      */
     public function getAccountBalance(string $username): float
     {
-        if(!$username)
-        {
+        if (!$username) {
             throw new TncException("Username must not be empty");
         }
         $username = [$username];
@@ -98,12 +97,10 @@ class AccountFactory
      */
     public function createAccount(string $creator, string $creatorWif, string $username, string $password): array
     {
-        if(!($username) )
-        {
+        if (!($username)) {
             throw new TncException("Username must not be empty");
         }
-        if( !($password))
-        {
+        if (!($password)) {
             throw new TncException("Password must not be empty");
         }
         $param = ["creator" => $creator, "creator_wif" => $creatorWif, "username" => $username, "password" => $password];
@@ -136,10 +133,9 @@ class AccountFactory
      */
     public function updateAccountPassword(string $username, string $oldPassword, string $password): array
     {
-        $checkResponse=self::checkPassword($password);
-        if($checkResponse)
-        {
-            throw new TncAPIException(sprintf('%s %s %s',$checkResponse[0],$checkResponse[1],$checkResponse[2]));
+        $checkResponse = self::checkPassword($password);
+        if ($checkResponse) {
+            throw new TncAPIException(sprintf('%s %s %s', $checkResponse[0], $checkResponse[1], $checkResponse[2]));
         }
 
         $param = ["username" => $username, "old_password" => $oldPassword, "password" => $password];

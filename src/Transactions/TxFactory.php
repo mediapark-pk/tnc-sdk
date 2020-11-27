@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace TNC\Transactions;
 
+use Comely\Http\Exception\HttpRequestException;
+use Comely\Http\Exception\HttpResponseException;
+use Comely\Http\Exception\SSL_Exception;
+use TNC\Exception\TncAPIException;
 use TNC\TncCoin;
 use TNC\Exception\TncException;
 
@@ -29,10 +33,10 @@ class TxFactory
      * @param string $txId
      * @return Transaction
      * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
-     * @throws \TNC\Exception\TncAPIException
+     * @throws HttpRequestException
+     * @throws HttpResponseException
+     * @throws SSL_Exception
+     * @throws TncAPIException
      */
     public function getTransactionById(string $txId)  //: Transaction
     {
@@ -43,11 +47,16 @@ class TxFactory
         $param = ["transaction_id"=>$txId];
 
         $data = $this->tncCoin->httpClient()->sendRequest("getTransaction", $param,[],"POST");
-        if(($data["status"]=="success")&&($data["result"]))
-        {
-            return new Transaction($data);
-        }
-        throw new TncException($data["result"]??"Nothing Found");
+
+        print_r($data);
+        die();
+
+
+//        if(($data["status"]=="success")&&($data["result"]))
+//        {
+//            return new Transaction($data);
+//        }
+//        throw new TncException($data["result"]??"Nothing Found");
 
     }
 
