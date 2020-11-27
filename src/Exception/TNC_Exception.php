@@ -1,17 +1,19 @@
 <?php
 declare(strict_types=1);
-namespace TNC\Exception;
+
+namespace MediaParkPK\TNC\Exception;
+
 /**
- * Class TncException
- * @package TNC\Exception
+ * Class TNC_Exception
+ * @package MediaParkPK\TNC\Exception
  */
-class TncException extends \Exception
+class TNC_Exception extends \Exception
 {
     /**
      * @param string $method
      * @param string $expected
      * @param string $got
-     * @return TncException
+     * @return static
      */
     public static function unexpectedResultType(string $method, string $expected, string $got): self
     {
