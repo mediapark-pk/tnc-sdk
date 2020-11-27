@@ -1,70 +1,70 @@
 <?php
-
 declare(strict_types=1);
+<<<<<<< HEAD
 
 namespace TNC\Blocks;
+=======
+>>>>>>> 9e417ea224497d31264febadc721afdac6e151c8
 
+namespace MediaParkPK\TNC\Blocks;
 
-use Comely\Http\Exception\HttpRequestException;
-use Comely\Http\Exception\HttpResponseException;
-use Comely\Http\Exception\SSL_Exception;
-use TNC\Exception\TncException;
-use TNC\Exception\TncAPIException;
-use TNC\TncCoin;
+use MediaParkPK\TNC\Exception\TNC_APIResponseException;
+use MediaParkPK\TNC\TNC_Client;
 
 /**
  * Class BlockFactory
- * @package TNC\Blocks
+ * @package MediaParkPK\TNC\Blocks
  */
 class BlockFactory
 {
-    /** @var TncCoin  */
-    private TncCoin $tnc;
+    /** @var TNC_Client */
+    private TNC_Client $tnc;
 
     /**
      * BlockFactory constructor.
-     * @param TncCoin $tnc
+     * @param TNC_Client $tnc
      */
-    public function __construct(TncCoin $tnc)
+    public function __construct(TNC_Client $tnc)
     {
-        $this->tnc=$tnc;
+        $this->tnc = $tnc;
     }
 
     /**
      * @param int $blockNumber
      * @return Block
+<<<<<<< HEAD
      * @throws HttpRequestException
      * @throws HttpResponseException
      * @throws SSL_Exception
      * @throws TncAPIException
      * @throws TncException
+=======
+     * @throws TNC_APIResponseException
+     * @throws \MediaParkPK\TNC\Exception\TNC_APIException
+>>>>>>> 9e417ea224497d31264febadc721afdac6e151c8
      */
-    public function getBlockByNumber(int $blockNumber) :Block
+    public function getBlockByNumber(int $blockNumber): Block
     {
-        if(!$blockNumber)
-        {
-            throw new TncException("Blocknumber must not be empty");
-        }
-        $param = ["blockNum"=>$blockNumber];
-        $data = $this->tnc->httpClient()->sendRequest("getBlock",$param,[],"POST");
+        $params = [
+            "blockNum" => $blockNumber
+        ];
 
-        if(($data["status"]=="success")&&($data["result"]))
-        {
-            return new Block($data["result"]);
+        $result = $this->tnc->callAPI("getBlock", $params);
+        if (!is_array($result) || !$result) {
+            throw TNC_APIResponseException::unexpectedResultType("getBlock", "object", gettype($result));
         }
-        else if($data["status"]=="fail")
-        {
-            throw new TncException($data["result"]["message"]);
-        }
-        throw new TncException($data["result"]??"Nothing Found");
+
+        return new Block($result);
     }
 
     /**
      * @return int
-     * @throws TncException
+     * @throws TNC_APIResponseException
+     * @throws \MediaParkPK\TNC\Exception\TNC_APIException
      */
-    public function getLatestBlockNumber():int
+    public function getLatestBlockHeight(): int
     {
+<<<<<<< HEAD
         try {
             $response = $this->tnc->httpClient()->sendRequest("getDynamicGlobal", [], [], "POST");
         } catch (HttpResponseException $e) {
@@ -81,5 +81,9 @@ class BlockFactory
             throw new TncException($response["result"]["message"]);
         }
         throw new TncException("Server not working");
+=======
+        $global = $this->tnc->dynamicGlobal();
+        return (int)$global["head_block_number"];
+>>>>>>> 9e417ea224497d31264febadc721afdac6e151c8
     }
 }
