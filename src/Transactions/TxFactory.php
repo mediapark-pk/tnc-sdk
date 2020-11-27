@@ -1,54 +1,50 @@
 <?php
 declare(strict_types=1);
 
-namespace TNC\Transactions;
+namespace MediaParkPK\TNC\Transactions;
 
-use TNC\TncCoin;
-use TNC\Exception\TncException;
+use MediaParkPK\TNC\Exception\TNC_APIResponseException;
+use MediaParkPK\TNC\TNC_Client;
 
 /**
  * Class TxFactory
- * @package TNC\Transactions
+ * @package MediaParkPK\TNC\Transactions
  */
 class TxFactory
 {
-    /** @var TncCoin  */
-    private TncCoin $tncCoin;
+    /** @var TNC_Client */
+    private TNC_Client $tncCoin;
 
     /**
      * TxFactory constructor.
-     * @param TncCoin $tc
+     * @param TNC_Client $tc
      */
-    public function __construct(TncCoin $tc)
+    public function __construct(TNC_Client $tc)
     {
         $this->tncCoin = $tc;
     }
 
-
     /**
      * @param string $txId
      * @return Transaction
-     * @throws TncException
-     * @throws \Comely\Http\Exception\HttpRequestException
-     * @throws \Comely\Http\Exception\HttpResponseException
-     * @throws \Comely\Http\Exception\SSL_Exception
-     * @throws \TNC\Exception\TncAPIException
+     * @throws TNC_APIResponseException
+     * @throws \MediaParkPK\TNC\Exception\TNC_APIException
      */
-    public function getTransactionById(string $txId)  //: Transaction
+    public function getTransactionById(string $txId): Transaction
     {
-        if(!$txId)
-        {
-            throw new TncException("TxId cannot be null");
+        if (!$txId) {
+            throw new \InvalidArgumentException('Transaction id is required');
         }
-        $param = ["transaction_id"=>$txId];
 
-        $data = $this->tncCoin->httpClient()->sendRequest("getTransaction", $param,[],"POST");
-        if(($data["status"]=="success")&&($data["result"]))
-        {
-            return new Transaction($data);
+        $params = [
+            "transaction_id" => $txId
+        ];
+
+        $result = $this->tncCoin->callAPI("getTransaction", $params);
+        if (!is_array($result) || !$result) {
+            throw TNC_APIResponseException::unexpectedResultType("getTransaction", "object", gettype($result));
         }
-        throw new TncException($data["result"]??"Nothing Found");
 
+        return new Transaction($result);
     }
-
 }
