@@ -58,11 +58,9 @@ class AccountFactory
     public function getAccountBalance(string $username): string
     {
         if (!$username) {
-<<<<<<< HEAD
-            throw new TncException("Username must not be empty");
-=======
+
             throw new \InvalidArgumentException("Username must not be empty");
->>>>>>> 9e417ea224497d31264febadc721afdac6e151c8
+
         }
 
         $params = [
@@ -88,26 +86,7 @@ class AccountFactory
      */
     public function createAccount(string $creator, string $creatorWif, string $username, string $password): array
     {
-<<<<<<< HEAD
-        if (!($username)) {
-            throw new TncException("Username must not be empty");
-        }
-        if (!($password)) {
-            throw new TncException("Password must not be empty");
-        }
-        $param = ["creator" => $creator, "creator_wif" => $creatorWif, "username" => $username, "password" => $password];
-        $response = $this->tnc->httpClient()->sendRequest("createAccount", $param, [], "POST");
-        if ($response["status"] == "success" && $response["result"]) {
-            $data = $response["result"];
-            return [
-                "id" => $data["id"],
-                "blockNumber" => $data["block_num"],
-                "trxNum" => $data["trx_num"],
-                "expired" => $data["expired"]
-            ];
-        } else if ($response["status"] == "fail") {
-            throw new TncException($response["result"]["message"]);
-=======
+
         $params = [
             "creator" => $creator,
             "creator_wif" => $creatorWif,
@@ -118,7 +97,7 @@ class AccountFactory
         $result = $this->tnc->callAPI("createAccount", $params);
         if (!is_array($result)) {
             throw TNC_APIResponseException::unexpectedResultType("createAccount", "object", gettype($result));
->>>>>>> 9e417ea224497d31264febadc721afdac6e151c8
+
         }
 
         return [
@@ -139,15 +118,11 @@ class AccountFactory
      */
     public function updateAccountPassword(string $username, string $oldPassword, string $password): array
     {
-<<<<<<< HEAD
-        $checkResponse = self::checkPassword($password);
-        if ($checkResponse) {
-            throw new TncAPIException(sprintf('%s %s %s', $checkResponse[0], $checkResponse[1], $checkResponse[2]));
-=======
+
         $checkResponse = $this->checkPassword($password);
         if ($checkResponse) {
             throw new TNC_APIResponseException(implode(" ", $checkResponse));
->>>>>>> 9e417ea224497d31264febadc721afdac6e151c8
+
         }
 
         $params = [

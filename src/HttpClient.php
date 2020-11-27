@@ -3,13 +3,8 @@ declare(strict_types=1);
 
 namespace MediaParkPK\TNC;
 
-<<<<<<< HEAD
-use Comely\Http\Exception\HttpRequestException;
-use Comely\Http\Exception\HttpResponseException;
-use Comely\Http\Exception\SSL_Exception;
-=======
+
 use Comely\Http\Exception\HttpException;
->>>>>>> 9e417ea224497d31264febadc721afdac6e151c8
 use Comely\Http\Request;
 use MediaParkPK\TNC\Exception\TNC_APIException;
 
@@ -61,14 +56,9 @@ class HttpClient
      * @param array $headers
      * @param string $httpMethod
      * @return array
-<<<<<<< HEAD
-     * @throws TncAPIException
-     * @throws HttpRequestException
-     * @throws HttpResponseException
-     * @throws SSL_Exception
-=======
+
      * @throws TNC_APIException
->>>>>>> 9e417ea224497d31264febadc721afdac6e151c8
+
      */
     public function request(string $endpoint, array $params = [], array $headers = [], string $httpMethod = "POST"): array
     {

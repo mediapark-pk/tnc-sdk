@@ -1,11 +1,7 @@
 <?php
 
 declare(strict_types=1);
-<<<<<<< HEAD
 
-namespace TNC\Blocks;
-=======
->>>>>>> 9e417ea224497d31264febadc721afdac6e151c8
 
 namespace MediaParkPK\TNC\Blocks;
 
