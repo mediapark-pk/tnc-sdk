@@ -80,7 +80,6 @@ class TNC_Client
         if (!$failMsg) {
             $failMsg = 'API request failed';
         }
-
         throw new TNC_APIResponseException($failMsg);
     }
 
@@ -98,7 +97,7 @@ class TNC_Client
         ];
 
         $response = $this->httpClient->request("login", $params);
-        return isset($response["auth"]);
+        return isset($response["auth"])&&$response["auth"]==1;
     }
 
     /**

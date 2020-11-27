@@ -39,8 +39,8 @@ class TxFactory
         $params = [
             "transaction_id" => $txId
         ];
-
         $result = $this->tncCoin->callAPI("getTransaction", $params);
+
         if (!is_array($result) || !$result) {
             throw TNC_APIResponseException::unexpectedResultType("getTransaction", "object", gettype($result));
         }

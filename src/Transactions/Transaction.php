@@ -13,8 +13,8 @@ class Transaction
     public int $refBlockNum;
     /** @var int */
     public int $refBlockPrefix;
-    /** @var string */
-    public string $creator;
+    /** @var array */
+    public array $operations;
     /** @var string */
     public string $signature;
     /** @var string */
@@ -31,15 +31,14 @@ class Transaction
     public function __construct(array $data)
     {
 
-        $this->refBlockNum = (int)$data['result']['ref_block_num'];
-        $this->refBlockPrefix = (int)$data['result']['ref_block_prefix'];
-        if ($data['result']["operations"]) {
-            $this->creator = (string)$data['result']["operations"][0][1]["creator"];
+        $this->refBlockNum = (int)$data['ref_block_num'];
+        $this->refBlockPrefix = (int)$data['ref_block_prefix'];
+        if ($data["operations"]) {
+            $this->operations = $data["operations"];
         }
-
-        $this->signature = $data['result']["signatures"][0];
-        $this->transactionId = $data['result']["transaction_id"];
-        $this->blockNum = $data['result']["block_num"];
-        $this->transactionNum = $data['result']["transaction_num"];
+        $this->signature = $data["signatures"][0];
+        $this->transactionId = $data["transaction_id"];
+        $this->blockNum = $data["block_num"];
+        $this->transactionNum = $data["transaction_num"];
     }
 }
