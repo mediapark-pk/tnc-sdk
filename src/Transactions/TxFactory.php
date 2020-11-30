@@ -3,12 +3,7 @@ declare(strict_types=1);
 
 namespace MediaParkPK\TNC\Transactions;
 
-
-use Comely\Http\Exception\HttpRequestException;
-use Comely\Http\Exception\HttpResponseException;
-use Comely\Http\Exception\SSL_Exception;
-use TNC\Exception\TncAPIException;
-use TNC\Exception\TncException;
+use MediaParkPK\TNC\Exception\TNC_APIResponseException;
 use MediaParkPK\TNC\TNC_Client;
 
 /**
@@ -32,12 +27,8 @@ class TxFactory
     /**
      * @param string $txId
      * @return Transaction
-     * @throws TncException
-     * @throws HttpRequestException
-     * @throws HttpResponseException
-     * @throws SSL_Exception
-     * @throws TncAPIException
-
+     * @throws \MediaParkPK\TNC\Exception\TNC_APIException
+     * @throws \MediaParkPK\TNC\Exception\TNC_APIResponseException
      */
     public function getTransactionById(string $txId): Transaction
     {
